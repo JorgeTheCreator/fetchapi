@@ -6,21 +6,25 @@ fetchPeopleData
     return response.json();
   })
   .then(data => {
-    // Work with JSON data here
-    const res = data[0];
-    console.log('---------------');
-    const { name, email, phone, age, address } = res;
-
-    //const y = Object.values(res).map(e => `<td>${e}<td>`);
-    Object.keys(res).map(e => console.log(e));
-    const myValues = res;
-    // console.log(myValues);
-    const htmlOutPut = `<td>${name}</td>
-    <td>${email}</td><td>${phone}</td><td>${age}</td>
-    <td>${address}</td>
-    `;
-
-    document.getElementById('td').innerHTML = htmlOutPut;
+    data.forEach(element => {
+      const {
+        name,
+        age,
+        email,
+        phone,
+        company,
+        friends: [{ name: friend_name }]
+      } = element;
+      //console.log(name, age, email, phone, company);
+      document.getElementById('td').innerHTML += `<tr>
+      <td>${name}</td>
+      <td>${age}</td>
+      <td>${email}</td>
+      <td>${phone}</td>
+      <td>${company}</td>
+      <td>${friend_name}</td>
+    </tr>`;
+    });
   })
   .catch(err => {
     // Do something for an error here
